@@ -107,7 +107,7 @@ CCF = genCCF(ntrees, train_spectrum(:,1:10),train_spectrum(:,11));
 %% save model
 disp(' Saving pretrained model ');
 fsave = strcat(server,'model/',method,'/','pre_trained_',city,'_with_',num2str(ntrees),'trees.mat');
-savefast(fsave,'-struct','CCF');
+save(fsave,'-struct','CCF', '-v7.3');
 
 end
 
