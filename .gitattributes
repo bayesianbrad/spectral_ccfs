@@ -1,0 +1,8 @@
+ccfs/Training_sets_and_ground_truth/informal_classification/Kenya/Lower/DG/lower_30cm_clipped_image.tif filter=lfs diff=lfs merge=lfs -text
+ccfs/Training_sets_and_ground_truth/informal_classification/Kenya/Kibera/DG/kibera_30cm_image.tif filter=lfs diff=lfs merge=lfs -text
+ccfs/Training_sets_and_ground_truth/informal_classification/Kenya/Upper/DG/upper_30cm_clipped_image.tif[[:space:]] filter=lfs diff=lfs merge=lfs -text
+ccfs/Training_sets_and_ground_truth/informal_classification/Southafrica/Capetown/S2/training/Capetown.tif filter=lfs diff=lfs merge=lfs -text
+ccfs/Training_sets_and_ground_truth/material_classification/Cape[[:space:]]Town/test/capetown_s2.tif filter=lfs diff=lfs merge=lfs -text
+ccfs/Training_sets_and_ground_truth/informal_classification/Kenya/Kibera/DG/kibera_30cm_ground_truth.tif filter=lfs diff=lfs merge=lfs -text
+.tif filter=lfs diff=lfs merge=lfs -text
+*.mat filter=lfs diff=lfs merge=lfs -text
