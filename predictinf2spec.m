@@ -1,4 +1,5 @@
 function predictinf2spec(country,source,city,testcity,type,method,multiclass, class_map,classes_remove,ntrees,server, predict_data)
+
 % Performs a prediction on the given test set and saves the metrics: IOU,
 % classification percentage of informal, classification percentage of 
 % environment. 
@@ -91,6 +92,7 @@ else
     end
 
 end
+
 %% Test model
 disp(['CCF prediction on ', city]);
 YpredCCF = predictFromCCF(CCF,spectrum(:,1:10));
@@ -106,6 +108,7 @@ metrics{1,1}='Informal pixel classification : ';
 metrics{1,2}= classification1;
 metrics{2,1}= 'Environment pixel classification : ' ;
 metrics{2,2} = classification0;
+
 
 
 fmetric = strcat(server,'predictions/',country,'/',city,'/','prediction_with_',testcity,'_metrics.dat');

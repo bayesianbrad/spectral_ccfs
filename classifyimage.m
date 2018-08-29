@@ -15,6 +15,7 @@ function classifyimage(country,source,city,testcity,type,method, ntrees, server)
 %         disp('Cannot classify on same train set');
 %         return
 %     end
+
     if ~exist('server','var')
         server = '';
     end
@@ -26,6 +27,7 @@ function classifyimage(country,source,city,testcity,type,method, ntrees, server)
     ext = strcat(city,filetype);
     fgt = fullfile(load_inf,country,city,source,type,extgt);
     ft  =fullfile(load_inf,country,city,source,type,ext);
+
 %   image_ground_truth=  double(imread(fgt));
     image_test = double(imread(ft));
     lfname = strcat(server,'model/',method,'/pre_trained_',testcity,'_with_',num2str(ntrees),'trees.mat');

@@ -1,6 +1,5 @@
 %% Defining experiment params 
-% testcities = {'Mumbai', 'Capetown','Capetownsmall','Lower','Kibera','Kianda', 'AlGeneina','ElDaein','Mokako','Medellin'};
-testcities = {'Lower','Kibera','Kianda'};
+testcities = {'Mumbai', 'Capetown','Capetownsmall','Lower','Kibera','Kianda', 'AlGeneina','ElDaein','Mokako','Medellin'};
 kenya.name = 'Kenya';
 kenya.cities = {'Lower','Kibera' ,'Kianda'};
 kenya.testcities = testcities;
@@ -23,7 +22,6 @@ india.multiclass = {0};
 india.classremove = {[]};
 
 southafrica.name = 'Southafrica';
-% southafrica.cities = {'Capetown'};
 southafrica.cities = {'Capetown','Capetownsmall'};
 southafrica.testcities =testcities;
 southafrica.classmaps = {[],[]};
@@ -43,8 +41,8 @@ colombia.testcities =testcities;
 colombia.classmaps = {[]};
 colombia.multiclass = {0};
 colombia.classremove = {[]};
-% data.countries = {southafrica, nigeria, kenya, india, sudan,colombia};
-data.countries = {kenya};
+
+data.countries = {southafrica, nigeria, kenya, india, sudan,colombia};
 % global constants
 source = 'S2';
 type= 'training';
@@ -82,7 +80,6 @@ if train_model
         disp([' Training model... for ' data.countries{ii}.name]);
         cities = data.countries{ii}.cities;
         for jj=1:length(cities)
-            inform2spec(data.countries{ii}.name,source,cities{jj},type,method,split,data.countries{ii}.multiclass{jj}, data.countries{ii}.classmaps{jj},data.countries{ii}.classremove{jj}, ntrees,server, predict)
         end
     end
 end
@@ -109,7 +106,7 @@ if classify_image
      end
 end
 if create_image
-     for ii=1:nCountries
+     parfor ii=1:nCountries
         disp(['Create image...for ' data.countries{ii}.name]);
         cities = data.countries{ii}.cities;
         for jj=1:length(cities)
@@ -140,5 +137,6 @@ if create_all
     disp(' Saving all informal settlements binary mask ');
     save(fsave,'ground_truth');
 end
+
 
 

@@ -50,7 +50,11 @@ class_3(class_3 == 2) = 3;
 % train on 80% of the size of the smallest class. Validate on the remaining
 % 20%. 
 datapoints = e;
+<<<<<<< HEAD
 train_size = floor(0.8*datapoints);
+=======
+train_size = floor(0.9*datapoints);
+>>>>>>> 444654aafb9f6af71cfaf2c708b349a3520c148f
 val_size = datapoints - train_size;
 
 % balancing the datasets

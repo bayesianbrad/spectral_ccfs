@@ -35,5 +35,6 @@ function spectiff_to_mat(country,city,source,type, server)
     fsave= strcat(base,country,'/',city,'/',source,'/',type,'/',city,'_ground_truth.mat');
     save(fsave, 'ground_truth','-v7.3','-nocompression');
 
+
 end
 
