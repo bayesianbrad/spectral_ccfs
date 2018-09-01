@@ -51,7 +51,7 @@ function classifyimagetest(country,source,city,testcity,type,method, ntrees, ser
     end
 
     disp('Saving classified image...');
-    filename = strcat(server,'predictions','/',fname);
+    filename = strcat(server,'predictions/',method,fname);
     save(filename, 'image_mask');
 
 end

@@ -30,6 +30,7 @@ function meanIOU2(country,source,city,testcity,type,method, server)
     
 %     server = '/Users/bradley/Documents/Projects/Team2_FDL/synthesis-generate-spectrum/';
     base = strcat(server,'predictions/');
+    
     full = strcat(base,country,'/',city,'/images/');
     img_mas = strcat(full,'pred_with_',testcity,'_image_mask.mat');
     image_mask = load(img_mas);
@@ -109,8 +110,9 @@ metrics{2,2} = accuracies(2);
 metrics{3,1}= ' Mean Accuracy';
 metrics{3,2}= avacc;
 
-
-fmetric = strcat(server,'predictions/',country,'/',city,'/','meanIOU_ontrain_prediction_with_',testcity,'_metrics.dat');
+dirname = strcat(server,'predictions/',country,'/',city);
+mkdir_if_not_exist(dirname);
+fmetric = strcat(dirname,'/','meanIOU_ontrain_prediction_with_',testcity,'_metrics.dat');
 fileID = fopen(fmetric,'w');
 formatSpec = '%s %.5f \n';
 [nrows,ncols] = size(metrics);

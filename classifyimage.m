@@ -31,7 +31,7 @@ function classifyimage(country,source,city,testcity,type,method, ntrees, server)
 %   image_ground_truth=  double(imread(fgt));
     image_test = double(imread(ft));
     lfname = strcat(server,'model/',method,'/pre_trained_',testcity,'_with_',num2str(ntrees),'trees.mat');
-    fname = strcat(country,'/',city,'/images/','pred_with_',testcity,'_image_mask.mat');
+    fname = strcat('pred_with_',testcity,'_image_mask.mat');
     %% Load pretrained model
 
     CCF = load(lfname);
@@ -52,7 +52,9 @@ function classifyimage(country,source,city,testcity,type,method, ntrees, server)
     end
 
     disp('Saving classified image...');
-    filename = strcat(server,'predictions','/',fname);
+    dirname = strcat(server,'predictions','/',method, '/',country,'/',city,'/images');
+    mkdir_if_not_exist(dirname);
+    filename = strcat(dirname,'/',fname);
     save(filename, 'image_mask');
 
 end

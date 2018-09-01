@@ -51,7 +51,8 @@ split = 0.8;
 classes = 2;
 % method for all 
 method= 'spec2inf';
- 
+lbl = {'Environment', 'Informal'};
+cmap = [0, 1 ; 0 1; 0 1];
 server = '/Users/bradley/Documents/Projects/Team2_FDL/synthesis-generate-spectrum/ccfs/';
 nCountries= length(data.countries);
 %% Set the things that you would like to do
@@ -111,7 +112,7 @@ if create_image
         cities = data.countries{ii}.cities;
         for jj=1:length(cities)
             for kk=1:length(data.countries{ii}.testcities)
-                plotlabelled(data.countries{ii}.name,cities{jj},data.countries{ii}.testcities{kk}, classes,server)
+                plotlabelled(data.countries{ii}.name,cities{jj},data.countries{ii}.testcities{kk}, classes,cmap, lbl,server)
             end
         end
      end

@@ -110,8 +110,9 @@ metrics{2,1}= 'Environment pixel classification : ' ;
 metrics{2,2} = classification0;
 
 
-
-fmetric = strcat(server,'predictions/',country,'/',city,'/','prediction_with_',testcity,'_metrics.dat');
+dirname = strcat(server,'predictions/',country,'/',city);
+mkdir_if_not_exist(dirname);
+fmetric = strcat(dirname,'/prediction_with_',testcity,'_metrics.dat');
 fileID = fopen(fmetric,'w');
 formatSpec = '%s %.5f \n';
 [nrows,ncols] = size(metrics);

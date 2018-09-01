@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 function inform2spec(country,source,city,type,method,split,multiclass, class_map,classes_remove, ntrees,server,train_test_on_same)
-=======
-function inform2spec(country,source,city,type,method,split,multiclass, class_map,classes_remove, ntrees,server)
->>>>>>> 444654aafb9f6af71cfaf2c708b349a3520c148f
 %Runs the training for CCFs on spectral data to informal. 
 % Saves the trained model in the country specific model folder. 
 
@@ -21,14 +17,11 @@ function inform2spec(country,source,city,type,method,split,multiclass, class_map
 % values to new class values i.e class_map = [3 2 1 5; 0 0 0 1];
 % classes_remove - array of classes to be removed.
 % ntrees - number of trees to use for constructing ccf forest 
-<<<<<<< HEAD
 % server - str - path to where ever the source code is being run from
 % predict - bool - to avoid testing and training on the same data, when
 % this flag is activated it automatically performs the prediction and 
 % will avoid the prediction during the second function call in run
 % experiments. 
-=======
->>>>>>> 444654aafb9f6af71cfaf2c708b349a3520c148f
 if ~exist('multiclass','var')
     multiclass = 0;
 end
@@ -44,14 +37,10 @@ end
 if ~exist('server','var')
     server='';
 end
-<<<<<<< HEAD
+ 
 if ~exist('train_test_on_same','var')
     train_test_on_same = 0;
 end
-=======
-
-
->>>>>>> 444654aafb9f6af71cfaf2c708b349a3520c148f
 base = strcat(server,'Training_sets_and_ground_truth/informal_classification/');
 endn = strcat(city,'_ground_truth.mat');
 lfname  = strcat(base,'/',country,'/',city,'/',source,'/',type,'/',endn);
@@ -119,10 +108,12 @@ end
 %% Train model
 disp('Training CCF')
 CCF = genCCF(ntrees, train_spectrum(:,1:10),train_spectrum(:,11));
-<<<<<<< HEAD
+
 %% save model
 disp(' Saving pretrained model ');
-fsave = strcat(server,'model/',method,'/','pre_trained_',city,'_with_',num2str(ntrees),'trees.mat');
+dirname = strcat(server,'model/',method);
+mkdir_if_not_exist(dirname)
+fsave = strcat(dirname,'/','pre_trained_',city,'_with_',num2str(ntrees),'trees.mat');
 save(fsave,'-struct','CCF', '-v7.3','-nocompression');
 
 void = 0;
@@ -131,17 +122,6 @@ if train_test_on_same
 end
 % YpredCCF = predictFromCCF(CCF,validation_spectrum(:,1:10));
 % YTest = validation_spectrum(:,11);
-
-
-=======
-% YpredCCF = predictFromCCF(CCF,validation_spectrum(:,1:10));
-% YTest = validation_spectrum(:,11);
-
-%% save model
-disp(' Saving pretrained model ');
-fsave = strcat(server,'model/',method,'/','pre_trained_',city,'_with_',num2str(ntrees),'trees.mat');
-save(fsave,'-struct','CCF', '-v7.3');
->>>>>>> 444654aafb9f6af71cfaf2c708b349a3520c148f
 
 end
 
