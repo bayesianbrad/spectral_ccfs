@@ -112,7 +112,7 @@ if create_image
         cities = data.countries{ii}.cities;
         for jj=1:length(cities)
             for kk=1:length(data.countries{ii}.testcities)
-                plotlabelled(data.countries{ii}.name,cities{jj},data.countries{ii}.testcities{kk}, classes,cmap, lbl,server)
+                plotlabelled(data.countries{ii}.name,cities{jj},data.countries{ii}.testcities{kk}, classes,cmap, lbl,ntrees,server)
             end
         end
      end
