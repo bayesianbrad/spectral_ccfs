@@ -31,7 +31,11 @@ function classifyimage(country,source,city,testcity,type,method, ntrees, server)
 %   image_ground_truth=  double(imread(fgt));
     image_test = double(imread(ft));
     lfname = strcat(server,'model/',method,'/pre_trained_',testcity,'_with_',num2str(ntrees),'trees.mat');
-    fname = strcat('pred_with_',testcity,'_image_mask.mat');
+    if strcmp(testcity, 'on_Afrobarometer')
+       fname = strcat('pred_with_',testcity,'_',num2str(ntrees),'_image_mask.mat');
+    else
+       fname = strcat('pred_with_',testcity,'_image_mask.mat');
+    end
     %% Load pretrained model
 
     CCF = load(lfname);
