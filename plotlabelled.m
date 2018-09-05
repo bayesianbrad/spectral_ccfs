@@ -1,4 +1,4 @@
-function plotlabelled(country,city,testcity, classes,method, cmap, lbl,server)
+function plotlabelled(country,city,testcity, classes,method, cmap, lbl,ntrees,server)
 
 % lbl - cell array of strings - strings correspond to the classes of
 % materials
@@ -27,7 +27,12 @@ function plotlabelled(country,city,testcity, classes,method, cmap, lbl,server)
         
     base = strcat(server,'predictions/',method,'/');
     full = strcat(base,country,'/',city,'/images/');
-    img_mas = strcat(full,'pred_with_',testcity,'_image_mask.mat');
+    if strcmp(testcity, 'on_Afrobarometer')
+        img_mas  = strcat(full,'pred_with_',testcity,'_',num2str(ntrees),'_image_mask.mat');
+    else
+        img_mas = strcat(full,'pred_with_',testcity,'_image_mask.mat');
+    end
+    
     image_mask = load(img_mas);
     image_mask = image_mask.image_mask;
 
