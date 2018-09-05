@@ -63,7 +63,7 @@ method= 'spec2inf';
 lbls = {'Environment', 'Metal', 'Shingles','Thatch'};
 cmap = [0 1 0 0 1 0 0; 0 1 0 1 0 0 0; 0 0 0 1 0 0 0];
 
-server = '/Users/bradley/Documents/Projects/Team2_FDL/synthesis-generate-spectrum/ccfs/';
+server = '/data/greyheron/not-backed-up/aims/aims16/bgramhan/ccfs/';
 nCountries= length(data.countries);
 %% Set the things that you would like to do
 create_binary_mask =0;
