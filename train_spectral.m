@@ -111,10 +111,10 @@ function train_spectral(dataset,method,type,fext, ntrees,balance,classes,server)
         reduced_c6(index,:) = [];
         c6_test = reduced_c6;
 
-    %     training_data = vertcat(c0_train, c1_train, c2_train, c3_train, c4_train, c5_train, c6_train);
-    %     test_data = vertcat(c0_test, c1_test, c2_test, c3_test, c4_test, c5_test, c6_test);
-        training_data = vertcat(c0_train, c1_train, c2_train, c3_train, c4_train);
-        test_data = vertcat(c0_test, c1_test, c2_test, c3_test, c4_test);
+        training_data = vertcat(c0_train, c1_train, c2_train, c3_train, c4_train, c5_train, c6_train);
+        test_data = vertcat(c0_test, c1_test, c2_test, c3_test, c4_test, c5_test, c6_test);
+%         training_data = vertcat(c0_train, c1_train, c2_train, c3_train, c4_train);
+%         test_data = vertcat(c0_test, c1_test, c2_test, c3_test, c4_test);
     else
         %% Sepearate classes data set.
         % class 2 has the lowest amount of data 
@@ -192,7 +192,7 @@ function train_spectral(dataset,method,type,fext, ntrees,balance,classes,server)
 
     % Print classification rates per class
 
-    for ii = 1:classes+1
+    for ii = 1:classes
         f1=YTest == ii-1;
         disp([' The classification rate for class ' num2str(ii-1) ' is : ' num2str(sum(sum(YTest(f1) == YpredCCF(f1))) / sum(sum(f1))) '%']);
     end
