@@ -1,4 +1,4 @@
-function plotlabelled(country,city,testcity, classes,method, cmap, lbl,ntrees,server)
+function plotlabelled(country,city,testcity, classes,method, cmap, lbl,ntrees,legend_true,server)
 
 % lbl - cell array of strings - strings correspond to the classes of
 % materials
@@ -18,13 +18,13 @@ function plotlabelled(country,city,testcity, classes,method, cmap, lbl,ntrees,se
     if ~exist('lbl','var')
         lbl = {};
     end
-    max_col = max(cmap);
-    min_col = min(cmap);
-    if max_col > 1 || min_col < 0
-        disp('Warning : Matlab colour palette requires values between 0 and 1, exiting ');
-        return
-    end
-        
+%    max_col = max(cmap);
+%   min_col = min(cmap);
+%   if max_col > 1 || min_col < 0
+%        disp('Warning : Matlab colour palette requires values between 0 and 1, exiting ');
+%        return
+%    end
+
     base = strcat(server,'predictions/',method,'/');
     full = strcat(base,country,'/',city,'/images/');
     if strcmp(testcity, 'on_Afrobarometer')
@@ -36,7 +36,6 @@ function plotlabelled(country,city,testcity, classes,method, cmap, lbl,ntrees,se
     image_mask = load(img_mas);
     image_mask = image_mask.image_mask;
 
-   
     image_mask1 = image_mask;
     image_mask2 = image_mask;
     image_mask3 = image_mask;
@@ -50,11 +49,18 @@ function plotlabelled(country,city,testcity, classes,method, cmap, lbl,ntrees,se
     % Creating the legend
     colormap(cmap');
     % Add relevant legend
-    for ii = 1:size(cmap,1)
-        p(ii) = patch(NaN, NaN, cmap(ii,:));
+    if legend_true
+        cmapt = cmap';
+        for ii = 1:size(cmapt)
+            p(ii) = patch(NaN, NaN, cmapt(ii,:));
+        end
+        legend(p, lbl);
     end
-    legend(p, lbl);
-    fsave = strcat(full,city,'_colorsegmented.jpg');
+    if strcmp(testcity, 'on_Afrobarometer')
+        fsave = strcat(full,city,'_',num2str(ntrees),'_colorsegmented.jpg');
+    else
+        fsave = strcat(full,city,'_colorsegmented.jpg');
+    end
     saveas(fig, fsave);
 
 end

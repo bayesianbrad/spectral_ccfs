@@ -51,80 +51,40 @@ colombia.classremove = {[]};
 % 0.7 - Thatch or Grass
 % 0.85 - Plastic sheets
 % 1 - Asbestos
+
 data.countries = {southafrica, nigeria, kenya, india, sudan,colombia};
 % global constants
+server =   '/Users/bradley/Documents/Projects/Team2_FDL/synthesis-generate-spectrum/ccfs/';
 source = 'S2';
 type= 'training';
 split = 0.8;
 % as we are just doing binary pred
 classes = 7;
 % method for all 
-method= 'spec2inf';
-lbls = {'Environment', 'Metal', 'Shingles','Thatch'};
-cmap = [0 1 0 0 1 0 0; 0 1 0 1 0 0 0; 0 0 0 1 0 0 0];
-
-server = '/data/greyheron/not-backed-up/aims/aims16/bgramhan/ccfs/';
-nCountries= length(data.countries);
+method= 'spec2mat';
+lbls = {'Environment', 'Metal', 'Tiles','Shingles','Thatch', 'Plastic', 'Asbestos'};
+cmap = [0 1 0 0 1 0 0;
+        0 1 0 1 0 0 0; 
+        0 0 0 1 0 0 0];
 %% Set the things that you would like to do
 create_binary_mask =0;
-train_model = 0;
+train_model =  0;
 test_model =0;
-classify_image =1;
+classify_image =0;
 create_image =1;
 calc_meanIOU = 0;
 create_all =0;
-nTrees = [10,15,25,50,100,200];
-
-%% Run experiment
-% if create_binary_mask
-%     parfor ii=1:nCountries
-%         disp([' Creating Binary Mask... for ' data.countries{ii}.name]);
-%         cities = data.countries{ii}.cities;
-%         for jj=1:length(cities)
-%             disp([' Creating Binary Mask... for ' cities{jj}])
-%             spectiff_to_mat(data.countries{ii}.name,cities{jj},source,type,server);
-%         end
-%     end
-% end
-% if train_model
-%     parfor ii=1:nCountries
-%         disp([' Training model... for ' data.countries{ii}.name]);
-%         cities = data.countries{ii}.cities;
-%         for jj=1:length(cities)
-%             inform2spec(data.countries{ii}.name,source,cities{jj},type,method,split,data.countries{ii}.multiclass{jj}, data.countries{ii}.classmaps{jj},data.countries{ii}.classremove{jj}, ntrees,server)
-%         end
-%     end
-% end
-%   if test_model
-%       parfor ii=1:nCountries
-%         disp(['Testing model...for ' data.countries{ii}.name]);
-%         cities = data.countries{ii}.cities;
-%         for jj=1:length(cities)
-%             for kk=1:length(data.countries{ii}.testcities)
-%                 predictinf2specontrain(data.countries{ii}.name,source,cities{jj},data.countries{ii}.testcities{kk},type,method,data.countries{ii}.multiclass{jj}, data.countries{ii}.classmaps{jj},data.countries{ii}.classremove{jj},ntrees,server);
-%             end
-%         end
-%       end
-%   end
-% if classify_image
-%      parfor ii=1:nCountries
-%         disp(['Classifying image ... for ' data.countries{ii}.name]);
-%         cities = data.countries{ii}.cities;
-%         for jj=1:length(cities)
-%             for kk=1:length(data.countries{ii}.testcities)
-%                 classifyimagetest(data.countries{ii}.name,source,cities{jj},data.countries{ii}.testcities{kk},type,method,ntrees,server)
-%             end
-%         end
-%      end
-% end
-% the classify image below is modified for afrobarometer
+ntrees = [25 200];
+legend_true=0; %plot legend 1 , else 0
+predict = 1; % Train and test on same city
+nCountries = length(data.countries);
 if classify_image
      for ii=1:nCountries
         disp(['Classifying image ... for ' data.countries{ii}.name]);
         cities = data.countries{ii}.cities;
         for jj=1:length(cities)
-            parfor kk=1:length(nTrees)
-             classifyimage(data.countries{ii}.name,source,cities{jj},'on_Afrobarometer',type,method,nTrees(kk),server)
+            parfor kk=1:length(ntrees)
+             classifyimage(data.countries{ii}.name,source,cities{jj},'on_Afrobarometer',type,method,ntrees(kk),server)
             end
         end
      end
@@ -135,31 +95,9 @@ if create_image
         cities = data.countries{ii}.cities;
         for jj=1:length(cities)
             for kk=1:length(ntrees)
-                plotlabelled(data.countries{ii}.name,cities{jj},'on_Afrobarometer', classes,cmap,lbls,server)
+                plotlabelled(data.countries{ii}.name,cities{jj},'on_Afrobarometer', classes,method,cmap,lbls,ntrees(kk),legend_true,server)
+
             end
         end
      end
 end
-if calc_meanIOU
-    parfor ii=1:nCountries
-        disp(['Create image...for ' data.countries{ii}.name]);
-        cities = data.countries{ii}.cities;
-        for jj=1:length(cities)
-            for kk=1:length(data.countries{ii}.testcities)
-                meanIOU2(data.countries{ii}.name,source,cities{jj},data.countries{ii}.testcities{kk},type,method, server)
-            end
-        end
-     end
-end
-if create_all
-    ground_truth =[];
-    for ii=1:nCountries
-         disp(['Merging all masks...currently merging ' data.countries{ii}.name]);
-         ground_truth = concat_all_binary(data.countries{ii}.name,data.countries{ii}.cities,source,type,server,ground_truth);
-    end
-    fsave = strcat(load_inf,'All_settlements/','All/','S2/',type,'/All_ground_truth.mat');
-    disp(' Saving all informal settlements binary mask ');
-    save(fsave,'ground_truth');
-end
-
-
