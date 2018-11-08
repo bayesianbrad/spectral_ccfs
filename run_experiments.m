@@ -52,11 +52,11 @@ classes = 2;
 % method for all 
 method= 'spec2inf';
 lbl = {'Environment', 'Informal'};
-cmap = [0, 1 ; 0 1; 0 1];
+cmap = [0 1 ; 0 1; 0 1];
 server = '/Users/bradley/Documents/Projects/Team2_FDL/synthesis-generate-spectrum/ccfs/';
 nCountries= length(data.countries);
 %% Set the things that you would like to do
-create_binary_mask =1;
+create_binary_mask =0;
 train_model =  1;
 test_model =1;
 classify_image =1;

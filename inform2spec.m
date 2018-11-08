@@ -107,8 +107,12 @@ if multiclass==1
 end
 %% Train model
 disp('Training CCF')
-CCF = genCCF(ntrees, train_spectrum(:,1:10),train_spectrum(:,11));
+% CCF = genCCF(ntrees, train_spectrum(:,1:10),train_spectrum(:,11));
+% Uncomment if for ccfs
 
+% the below performs training with random forests. 
+obj = optionsClassCCF.defaultOptionsRF;
+CCF = genCCF(ntrees, train_spectrum(:,1:10),train_spectrum(:,11),false,obj);
 %% save model
 disp(' Saving pretrained model ');
 dirname = strcat(server,'model/',method);
