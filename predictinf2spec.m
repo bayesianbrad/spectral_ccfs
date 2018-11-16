@@ -1,4 +1,4 @@
-function predictinf2spec(country,source,city,testcity,type,method,multiclass, class_map,classes_remove,ntrees,server, predict_data)
+function predictinf2spec(CCF,country,source,city,testcity,type,method,multiclass, class_map,classes_remove,ntrees,server, predict_data)
 
 % Performs a prediction on the given test set and saves the metrics: IOU,
 % classification percentage of informal, classification percentage of 
@@ -58,12 +58,12 @@ if predict
     spectrum = predict_data;
     baseModel = strcat(server,'model/');
     fload = strcat(baseModel,method,'/pre_trained_',testcity,'_with_',num2str(ntrees),'trees.mat');
-    CCF = load(fload);
+%     CCF = load(fload);
 
 else
     baseModel = strcat(server,'model/');
     fload = strcat(baseModel,method,'/pre_trained_',testcity,'_with_',num2str(ntrees),'trees.mat');
-    CCF = load(fload);
+%     CCF = load(fload);
     if strcmp(testcity,city)
         disp(' Warning : Cannot test and train on the same data points')
         return

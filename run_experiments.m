@@ -1,11 +1,12 @@
 %% Defining experiment params 
-testcities = {'Mumbai', 'Capetown','Capetownsmall','Lower','Kibera','Kianda', 'AlGeneina','ElDaein','Mokako','Medellin'};
+testcities = {'Mumbai','Capetownsmall','Lower','Kibera','Kianda', 'AlGeneina','ElDaein','Mokako','Medellin'};
 kenya.name = 'Kenya';
 kenya.cities = {'Lower','Kibera' ,'Kianda'};
 kenya.testcities = testcities;
 kenya.classmaps = {[],[],[]};
 kenya.multiclass = {0,0,0};
 kenya.classremove = {[], [], []};
+kenya.ccf = {};
 
 sudan.name = 'Sudan';
 sudan.cities = {'AlGeneina','ElDaein'};
@@ -13,6 +14,7 @@ sudan.testcities =testcities;
 sudan.classmaps = {[];[]};
 sudan.multiclass = {0,0};
 sudan.classremove = {[];[]};
+sudan.ccf = {};
 % 
 india.name = 'India';
 india.cities = {'Mumbai'};
@@ -20,13 +22,15 @@ india.testcities = testcities;
 india.classmaps = {[]};
 india.multiclass = {0};
 india.classremove = {[]};
+india.ccf = {};
 
 southafrica.name = 'Southafrica';
-southafrica.cities = {'Capetown','Capetownsmall'};
+southafrica.cities = {'Capetownsmall'};
 southafrica.testcities =testcities;
 southafrica.classmaps = {[],[]};
 southafrica.multiclass = {0,0};
 southafrica.classremove = {[],[]};
+southafrica.ccf = {};
 
 nigeria.name = 'Nigeria';
 nigeria.cities = {'Mokako'};
@@ -34,6 +38,7 @@ nigeria.testcities =testcities;
 nigeria.classmaps = {[]};
 nigeria.multiclass = {0};
 nigeria.classremove = {[]};
+nigeria.ccf = {};
 
 colombia.name = 'Colombia';
 colombia.cities = {'Medellin'};
@@ -41,6 +46,7 @@ colombia.testcities =testcities;
 colombia.classmaps = {[]};
 colombia.multiclass = {0};
 colombia.classremove = {[]};
+colombia.ccf = {};
 
 data.countries = {southafrica, nigeria, kenya, india, sudan,colombia};
 % global constants
@@ -81,16 +87,21 @@ if train_model
         disp([' Training model... for ' data.countries{ii}.name]);
         cities = data.countries{ii}.cities;
         for jj=1:length(cities)
-        end
+             ccf= inform2spec(data.countries{ii}.name,source,cities{jj},type,...
+                 method,split,data.countries{ii}.multiclass{jj},...
+                 data.countries{ii}.classmaps{jj},data.countries{ii}.classremove{jj},...
+                 ntrees,server, predict);
+             data.countries{ii}.ccf{jj} = ccf; 
+       end
     end
 end
-  if test_model
+ if test_model
       for ii=1:nCountries
         disp(['Testing model...for ' data.countries{ii}.name]);
         cities = data.countries{ii}.cities;
         for jj=1:length(cities)
             for kk=1:length(data.countries{ii}.testcities)
-                predictinf2spec(data.countries{ii}.name,source,cities{jj},data.countries{ii}.testcities{kk},type,method,data.countries{ii}.multiclass{jj}, data.countries{ii}.classmaps{jj},data.countries{ii}.classremove{jj},ntrees,server);
+                predictinf2spec(data.countries{ii}.ccf{jj},data.countries{ii}.name,source,cities{jj},data.countries{ii}.testcities{kk},type,method,data.countries{ii}.multiclass{jj}, data.countries{ii}.classmaps{jj},data.countries{ii}.classremove{jj},ntrees,server);
             end
         end
       end
@@ -101,7 +112,7 @@ if classify_image
         cities = data.countries{ii}.cities;
         for jj=1:length(cities)
             for kk=1:length(data.countries{ii}.testcities)
-                classifyimage(data.countries{ii}.name,source,cities{jj},data.countries{ii}.testcities{kk},type,method,ntrees,server)
+                classifyimage(data.countries{ii}.ccf{jj},data.countries{ii}.name,source,cities{jj},data.countries{ii}.testcities{kk},type,method,ntrees,server)
             end
         end
      end

@@ -1,4 +1,4 @@
-function classifyimagetest(country,source,city,testcity,type,method, ntrees, server)
+function classifyimagetest(CCF,country,source,city,testcity,type,method, ntrees, server)
 % Classify image function takes in a set of file names, loads the relevant 
 % .tif image and loads the relevant ccfs pre-trained model and then
 % performs the prediction and then saves the prediction mask
@@ -33,7 +33,7 @@ function classifyimagetest(country,source,city,testcity,type,method, ntrees, ser
     fname = strcat(country,'/',city,'/images/','pred_with_',testcity,'_image_mask.mat');
     %% Load pretrained model
 
-    CCF = load(lfname);
+%     CCF = load(lfname);
     % Separate into to each column of image, which represents nrows x 10 matrix. 
     image_array = image_test;
     [n m p]  = size(image_test);

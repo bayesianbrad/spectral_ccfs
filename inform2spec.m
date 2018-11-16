@@ -1,4 +1,4 @@
-function inform2spec(country,source,city,type,method,split,multiclass, class_map,classes_remove, ntrees,server,train_test_on_same)
+function [CCF] = inform2spec(country,source,city,type,method,split,multiclass, class_map,classes_remove, ntrees,server,train_test_on_same)
 %Runs the training for CCFs on spectral data to informal. 
 % Saves the trained model in the country specific model folder. 
 
@@ -114,15 +114,15 @@ disp('Training CCF')
 obj = optionsClassCCF.defaultOptionsRF;
 CCF = genCCF(ntrees, train_spectrum(:,1:10),train_spectrum(:,11),false,obj);
 %% save model
-disp(' Saving pretrained model ');
-dirname = strcat(server,'model/',method);
-mkdir_if_not_exist(dirname)
-fsave = strcat(dirname,'/','pre_trained_',city,'_with_',num2str(ntrees),'trees.mat');
-save(fsave,'-struct','CCF', '-v7.3','-nocompression');
+% disp(' Saving pretrained model ');
+% dirname = strcat(server,'model/',method);
+% mkdir_if_not_exist(dirname)
+% fsave = strcat(dirname,'/','pre_trained_',city,'_with_',num2str(ntrees),'trees.mat');
+% save(fsave,'-struct','CCF', '-v7.3','-nocompression');
 
 void = 0;
 if train_test_on_same
-    predictinf2spec(country,source,city,city,type,method,multiclass,void,void,ntrees,server,validation_spectrum);
+    predictinf2spec(CCF,country,source,city,city,type,method,multiclass,void,void,ntrees,server,validation_spectrum);
 end
 % YpredCCF = predictFromCCF(CCF,validation_spectrum(:,1:10));
 % YTest = validation_spectrum(:,11);
